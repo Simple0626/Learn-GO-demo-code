@@ -8,13 +8,14 @@ import (
 )
 
 type Person struct {
-	Name string `json:"name"`
-	Age  int    `json:"age"`
+	Name    string `json:"name"`
+	Age     int    `json:"age"`
+	address string `json:"address"`
 }
 
 func main() {
 	// 1. 使用 json.Marshal 编码
-	person1 := Person{"张三", 24}
+	person1 := Person{"张三", 24, "jalgjalgjlag"}
 	bytes1, err := json.Marshal(&person1)
 	if err == nil {
 		// 返回的是字节数组 []byte
@@ -22,7 +23,7 @@ func main() {
 	}
 
 	// 2. 使用 json.Unmarshal 解码
-	str := `{"name":"李四","age":25}`
+	str := `{"name":"李四","age":25,"address":"jhljalf"}`
 	// json.Unmarshal 需要字节数组参数, 需要把字符串转为 []byte 类型
 	bytes2 := []byte(str) // 字符串转换为字节数组
 	var person2 Person    // 用来接收解码后的结果
@@ -31,7 +32,7 @@ func main() {
 	}
 
 	// 3. 使用 json.NewEncoder 编码
-	person3 := Person{"王五", 30}
+	person3 := Person{"王五", 30, "jlajgflajfglaj"}
 	// 编码结果暂存到 buffer
 	bytes3 := new(bytes.Buffer)
 	_ = json.NewEncoder(bytes3).Encode(person3)
@@ -40,11 +41,11 @@ func main() {
 	}
 
 	// 4. 使用 json.NewDecoder 解码
-	str4 := `{"name":"赵六","age":28}`
+	str4 := `{"name":"赵六","age":28,"address":"jalgjalf"}`
 	var person4 Person
 	// 创建一个 string reader 作为参数
 	err = json.NewDecoder(strings.NewReader(str4)).Decode(&person4)
 	if err == nil {
-		fmt.Println("json.NewDecoder 解码结果: ", person4.Name, person4.Age)
+		fmt.Println("json.NewDecoder 解码结果: ", person4.Name, person4.Age, person4.address)
 	}
 }
